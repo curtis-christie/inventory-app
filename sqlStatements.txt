@@ -1,0 +1,89 @@
+INSERT INTO anime_genres (anime_id, genre_id)
+SELECT new_anime.id, g.genre_id
+FROM new_anime
+JOIN (VALUES (1), (3), (7)) AS g(genre_id) ON TRUE;
+
+SAME AS:
+anime_id = newly created anime
+genre_ids = [1,3,7]
+
+for each genre_id:
+   insert (anime_id, genre_id)
+
+
+anime_id | genre_id
+---------|---------
+42       | 1
+42       | 3
+42       | 7
+-------------------------------------------
+
+anime
+id - auto generated
+anime_name - not null, unique
+type - not null check
+status - not null check
+seasons - not null default 1 >= 0
+episodes - not null default 0 >= 0
+has_english_dub - boolean default false
+genre - not null check 
+created_at - auto
+updated_at - auto
+
+genre in [
+  'Action',
+  'Adventure',
+  'Avant Garde',
+  'Boys Love',
+  'Comedy',
+  'Demons',
+  'Drama',
+  'Ecchi',
+  'Fantasy',
+  'Girls Love',
+  'Gourmet',
+  'Harem',
+  'Horror',
+  'Isekai',
+  'Iyashikei',
+  'Josei',
+  'Kids',
+  'Magic',
+  'Mahou Shoujo',
+  'Martial Arts',
+  'Mecha',
+  'Military',
+  'Music',
+  'Mystery',
+  'Parody',
+  'Psychological',
+  'Reverse Harem',
+  'Romance',
+  'School',
+  'Sci-Fi',
+  'Seinen',
+  'Shoujo',
+  'Shounen',
+  'Slice of Life',
+  'Space',
+  'Sports',
+  'Super Power',
+  'Supernatural',
+  'Suspense',
+  'Thriller',
+  'Vampire'
+]
+
+status in [
+  'not_yet',
+  'releasing',
+  'completed'
+]
+
+type in [
+  'show',
+  'movie',
+  'ova',
+  'ona',
+  'special'
+]
