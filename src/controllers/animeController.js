@@ -43,16 +43,44 @@ export async function listAnimeGet(req, res, next) {
 
     const result = await db.getAnime(query, values);
 
-    res.render(); //TODO add render view res.render("index", { messages: messages, title: "Mini Messageboard" });
-  } catch (error) {
+    res.send(result); //TODO add render view res.render("index", { messages: messages, title: "Mini Messageboard" });
+  } catch (err) {
     next(err);
   }
 }
 
 export async function createAnimePost(req, res, next) {
   try {
+    console.log("create anime");
     const { anime_name, type, status, seasons, episodes, has_english_dub, genre } = req.body;
-  } catch (error) {
+    const query = `
+      INSERT INTO anime (
+        anime_name,
+        genre,
+        type,
+        status,
+        seasons,
+        episodes,
+        has_english_dub
+      )
+      VALUES ($1, $2, $3, $4, $5, $6, $7)
+      RETURNING *;
+    `;
+
+    const values = [
+      anime_name,
+      genre,
+      type,
+      status,
+      seasons ?? 1,
+      episodes ?? 0,
+      has_english_dub ?? false,
+    ];
+
+    const result = await db.createAnime(query, values);
+
+    res.status(201).send(result.rows[0]);
+  } catch (err) {
     next(err);
   }
 }

@@ -1,7 +1,12 @@
 import pool from "./pool.js";
 
 async function getAnime(query, values) {
-  // get all anime
+  const { rows } = await pool.query("SELECT * FROM anime");
+  return rows;
 }
 
-export default { getAnime };
+async function createAnime(query, values) {
+  // create anime
+}
+
+export default { getAnime, createAnime };
