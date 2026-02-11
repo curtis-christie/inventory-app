@@ -48,3 +48,11 @@ export async function listAnimeGet(req, res, next) {
     next(err);
   }
 }
+
+export async function createAnimePost(req, res, next) {
+  try {
+    const { anime_name, type, status, seasons, episodes, has_english_dub, genre } = req.body;
+  } catch (error) {
+    next(err);
+  }
+}
