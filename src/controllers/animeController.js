@@ -43,7 +43,7 @@ export async function listAnimeGet(req, res, next) {
 
     const result = await db.getAnime(query, values);
 
-    res.send(result); //TODO add render view res.render("index", { messages: messages, title: "Mini Messageboard" });
+    res.send(result.rows); //TODO add render view res.render("index", { messages: messages, title: "Mini Messageboard" });
   } catch (err) {
     next(err);
   }
@@ -79,7 +79,33 @@ export async function createAnimePost(req, res, next) {
 
     const result = await db.createAnime(query, values);
 
-    res.status(201).send(result.rows[0]);
+    res.status(201).json(result.rows[0]);
+  } catch (err) {
+    next(err);
+  }
+}
+
+export async function updateAnimePatch(req, res, next) {
+  try {
+    const id = Number(req.params.id);
+
+    const cols = [];
+    const values = [];
+
+    // UPDATE anime
+    // SET (cols) = (values)
+    // WHERE id = `${id}`
+    db.updateAnime(id, cols, values);
+  } catch (err) {
+    next(err);
+  }
+}
+
+export async function removeAnimeDelete(req, res, next) {
+  try {
+    const id = Number(req.params.id);
+    const result = db.deleteAnime(id);
+    res.status(200).json(result.rows[0]);
   } catch (err) {
     next(err);
   }
