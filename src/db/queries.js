@@ -7,12 +7,13 @@ async function getAnime(query, values) {
 }
 
 async function createAnime(query, values) {
-  const results = await pool.query(query, values);
-  return results;
+  const result = await pool.query(query, values);
+  return result;
 }
 
 async function updateAnime(query, values) {
-  // update row/s
+  const result = await pool.query(query, values);
+  return result;
 }
 
 async function deleteAnime(id) {
