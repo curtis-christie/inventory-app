@@ -1,4 +1,5 @@
 import db from "../db/queries.js";
+import { ALLOWED_FIELDS } from "../utils/fields.js";
 
 export async function listAnimeGet(req, res, next) {
   try {
@@ -43,7 +44,7 @@ export async function listAnimeGet(req, res, next) {
 
     const result = await db.getAnime(query, values);
 
-    res.send(result.rows); //TODO add render view res.render("index", { messages: messages, title: "Mini Messageboard" });
+    return res.send(result.rows); //TODO add render view res.render("index", { messages: messages, title: "Mini Messageboard" });
   } catch (err) {
     next(err);
   }
@@ -79,7 +80,7 @@ export async function createAnimePost(req, res, next) {
 
     const result = await db.createAnime(query, values);
 
-    res.status(201).json(result.rows[0]);
+    return res.status(201).json(result.rows[0]);
   } catch (err) {
     next(err);
   }
@@ -89,13 +90,29 @@ export async function updateAnimePatch(req, res, next) {
   try {
     const id = Number(req.params.id);
 
-    const cols = [];
-    const values = [];
+    const updates = {};
+    for (const [key, value] of Object.entries(req.body)) {
+      if (ALLOWED_FIELDS.has(key)) {
+        updates[key] = value;
+      }
+    }
 
-    // UPDATE anime
-    // SET (cols) = (values)
-    // WHERE id = `${id}`
-    db.updateAnime(id, cols, values);
+    const keys = Object.keys(updates);
+    const setParts = keys.map((col, i) => `${col} = $${i + 1}`);
+
+    setParts.push("updated_at = NOW()");
+
+    const values = keys.map((k) => updates[k]);
+    values.push(id);
+
+    const query = `
+    UPDATE anime
+    SET ${setParts.join(", ")}
+    WHERE id = $${values.length}
+    RETURNING *`;
+
+    const result = await db.updateAnime(query, values);
+    return res.json(result.rows[0]);
   } catch (err) {
     next(err);
   }

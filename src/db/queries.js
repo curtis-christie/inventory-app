@@ -20,4 +20,4 @@ async function deleteAnime(id) {
   return results;
 }
 
-export default { getAnime, createAnime };
+export default { getAnime, createAnime, deleteAnime, updateAnime };
