@@ -1,9 +1,13 @@
 import pool from "./pool.js";
 
 async function getAnime(query, values) {
-  // TODO - values are inserted into query values
-  const results = await pool.query(query, []);
-  return results;
+  if (values.length > 0) {
+    const results = await pool.query(query, values);
+    return results;
+  } else {
+    const results = await pool.query(query, []);
+    return results;
+  }
 }
 
 async function createAnime(query, values) {

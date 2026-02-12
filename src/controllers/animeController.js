@@ -26,8 +26,7 @@ export async function listAnimeGet(req, res, next) {
 
     if (genre) {
       values.push(genre);
-      joins.push("JOIN anime_genres ag ON ag.anime_id = a.id");
-      filters.push(`ag.genre_id = $${values.length}`);
+      filters.push(`genre = $${values.length}`);
     }
 
     const whereClause = filters.length > 0 ? `WHERE ${filters.join(" AND ")}` : "";
@@ -42,9 +41,9 @@ export async function listAnimeGet(req, res, next) {
     LIMIT 50
     `;
 
-    const result = await db.getAnime(query, values);
+    const results = await db.getAnime(query, values);
 
-    return res.send(result.rows); //TODO add render view res.render("index", { messages: messages, title: "Mini Messageboard" });
+    return res.send(results.rows); //TODO add render view res.render("index", { messages: messages, title: "Mini Messageboard" });
   } catch (err) {
     next(err);
   }
