@@ -3,7 +3,7 @@ import { Router } from "express";
 
 const indexRoutes = Router();
 indexRoutes.get("/", (req, res) => {
-  res.send("Hello World");
+  res.render("index");
 });
 
 export { indexRoutes, animeRoutes };

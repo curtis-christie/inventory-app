@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Anime App</title>
+  </head>
+  <body>
+    <%- include('navbar') %>
+    <% for (let i =0; i < result.length; i++) {%>
+      <h2><%= result[i].anime_name %></h2>
+      <ul>
+        <li><%= result[i].type %></li>
+        <li><%= result[i].status %></li>
+        <li>Seasons: <%= result[i].seasons %></li>
+        <li>Episodes: <%= result[i].episodes %></li>
+        <li>English Dub: <%= result[i].has_english_dub ? "Yes" : "No" %></li>
+      </ul>
+    <% } %>
+  </body>
+</html>

@@ -43,7 +43,7 @@ export async function listAnimeGet(req, res, next) {
 
     const results = await db.getAnime(query, values);
 
-    return res.send(results.rows); //TODO add render view res.render("index", { messages: messages, title: "Mini Messageboard" });
+    return res.render("viewAnime", { result: results.rows }); //TODO add render view res.render("index", { messages: messages, title: "Mini Messageboard" });
   } catch (err) {
     next(err);
   }
