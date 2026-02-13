@@ -1,6 +1,8 @@
 import { Router } from "express";
 import {
   createAnimePost,
+  getAnimeUpdateForm,
+  getNewAnimeForm,
   listAnimeGet,
   removeAnimeDelete,
   updateAnimePatch,
@@ -9,6 +11,8 @@ import {
 export const animeRoutes = Router();
 
 animeRoutes.get("/", listAnimeGet); // get all or from search
-animeRoutes.post("/", createAnimePost); // create anime
-animeRoutes.patch("/:id", updateAnimePatch); // update anime
+animeRoutes.get("/add", getNewAnimeForm); // get new anime form
+animeRoutes.post("/add", createAnimePost); // create anime
+animeRoutes.get("/update/:id", getAnimeUpdateForm); // get update form
+animeRoutes.post("/update/:id", updateAnimePatch); // update anime
 animeRoutes.delete("/:id", removeAnimeDelete); // delete anime

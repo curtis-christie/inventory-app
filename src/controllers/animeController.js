@@ -49,6 +49,10 @@ export async function listAnimeGet(req, res, next) {
   }
 }
 
+export async function getNewAnimeForm(req, res, next) {
+  res.render("createAnimeForm");
+}
+
 export async function createAnimePost(req, res, next) {
   try {
     console.log("create anime");
@@ -78,11 +82,26 @@ export async function createAnimePost(req, res, next) {
     ];
 
     const result = await db.createAnime(query, values);
-
+    //TODO redirect to page detailing new anime
     return res.status(201).json(result.rows[0]);
   } catch (err) {
     next(err);
   }
+}
+
+export async function getAnimeUpdateForm(req, res, next) {
+  const value = [];
+  value.push(Number(req.params.id));
+  const query = `
+    SELECT *
+    FROM anime a
+    WHERE id = $1
+    `;
+  console.log(value);
+  const anime = await db.getAnime(query, value);
+  console.log(anime.rows[0]);
+
+  res.render("updateAnimeForm", { id: Number(req.params.id), anime: anime.rows[0] });
 }
 
 export async function updateAnimePatch(req, res, next) {
@@ -111,6 +130,7 @@ export async function updateAnimePatch(req, res, next) {
     RETURNING *`;
 
     const result = await db.updateAnime(query, values);
+    //TODO redirect to page detailing updated anime
     return res.json(result.rows[0]);
   } catch (err) {
     next(err);

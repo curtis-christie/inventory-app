@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Update Anime</title>
+  </head>
+  <body>
+    <h1>Anime Update Form</h1>
+    <form action="/update/<%= id %>" method="post">
+      <h2>Update Anime</h2>
+      <div>
+        <label for="anime_name">Anime Title </label>
+        <input type="text" id="anime_name" value="<%= anime.anime_name %>" name="anime_name" />
+      </div>
+
+      <div>
+        <label for="anime_type">Anime Type</label>
+        <select name="type" id="anime_type">
+          <option value="">Select Anime Type</option>
+          <option value="show" <%= (anime.type === "show") ? 'selected' : '' %>>Show</option>
+          <option value="movie" <%= (anime.type === "movie") ? 'selected' : '' %>>Movie</option>
+          <option value="ova" <%= (anime.type === "ova") ? 'selected' : '' %>>OVA</option>
+          <option value="ona" <%= (anime.type === "ona") ? 'selected' : '' %>>ONA</option>
+          <option value="special" <%= (anime.type === "special") ? 'selected' : '' %>>Special</option>
+        </select>
+      </div>
+
+      <div>
+        <label for="anime_status">Airing Status</label>
+        <select name="status" id="anime_status">
+          <option value="">Select Airing Status</option>
+          <option value="not_yet" <%= (anime.status === "not_yet") ? 'selected' : '' %>>Not Yet Aired</option>
+          <option value="releasing" <%= (anime.status === "releasing") ? 'selected' : '' %>>Releasing Now</option>
+          <option value="completed" <%= (anime.status === "completed") ? 'selected' : '' %>>Completed</option>
+        </select>
+      </div>
+
+      <div>
+        <label for="anime_genre">Genre</label>
+        <select name="genre" id="anime_genre">
+          <option value="<%= anime.genre %>"><%= anime.genre %></option>
+        </select>
+      </div>
+
+      <div>
+        <label for="anime_seasons">Number of Seasons </label>
+        <input type="number" id="anime_seasons" value="<%= anime.seasons %>" name="anime_seasons" />
+      </div>
+
+      <div>
+        <label for="anime_episodes">Number of Total Episodes</label>
+        <input type="number" id="anime_episodes" value="<%= anime.episodes %>" name="anime_episodes" />
+      </div>
+
+      <fieldset>
+        <legend>Does this anime have an English dub?</legend>
+        <div>
+          <label for=""></label>
+          <input type="radio" id="has_english_dub_yes" name="has_english_dub" value="1" <%= anime.has_english_dub ? 'checked' : '' %> />
+          <label for="has_english_dub_yes" >Yes</label>
+
+          <input type="radio" id="has_english_dub_no" name="has_english_dub" value="0" <%= anime.has_english_dub ? '' : 'checked' %> />
+          <label for="has_english_dub_no">No</label>
+        </div>
+      </fieldset>
+      <input type="submit" value="Update Anime" />
+    </form>
+  </body>
+</html>
